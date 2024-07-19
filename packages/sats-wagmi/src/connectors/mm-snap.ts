@@ -66,8 +66,6 @@ declare global {
   }
 }
 
-const { ethereum } = window;
-
 const snapId = 'npm:@gobob/bob-snap';
 
 class MMSnapConnector extends SatsConnector {
@@ -87,7 +85,7 @@ class MMSnapConnector extends SatsConnector {
     this.snapNetwork = getSnapNetwork(this.network);
 
     try {
-      const result: any = await ethereum.request({
+      const result: any = await window.ethereum.request({
         method: 'wallet_requestSnaps',
         params: {
           [snapId]: {}
@@ -112,7 +110,7 @@ class MMSnapConnector extends SatsConnector {
   }
 
   async isReady(): Promise<boolean> {
-    const snaps = await ethereum.request({
+    const snaps = await window.ethereum.request({
       method: 'wallet_getSnaps'
     });
 
@@ -125,7 +123,7 @@ class MMSnapConnector extends SatsConnector {
     }
 
     try {
-      return (await ethereum.request({
+      return (await window.ethereum.request({
         method: 'wallet_invokeSnap',
         params: {
           snapId,
@@ -309,7 +307,7 @@ class MMSnapConnector extends SatsConnector {
 
   async signInput(inputIndex: number, psbt: Psbt) {
     try {
-      const psbtBase64 = await ethereum.request({
+      const psbtBase64 = await window.ethereum.request({
         method: 'wallet_invokeSnap',
         params: {
           snapId,
@@ -340,7 +338,7 @@ class MMSnapConnector extends SatsConnector {
 
   async getMasterFingerprint() {
     try {
-      return await ethereum.request({
+      return await window.ethereum.request({
         method: 'wallet_invokeSnap',
         params: {
           snapId,
@@ -358,7 +356,7 @@ class MMSnapConnector extends SatsConnector {
 
   async signPsbt(base64Psbt: string, scriptType: BitcoinScriptType) {
     try {
-      return (await ethereum.request({
+      return (await window.ethereum.request({
         method: 'wallet_invokeSnap',
         params: {
           snapId,
@@ -381,7 +379,7 @@ class MMSnapConnector extends SatsConnector {
 
   async updateNetworkInSnap() {
     try {
-      return await ethereum.request({
+      return await window.ethereum.request({
         method: 'wallet_invokeSnap',
         params: {
           snapId,

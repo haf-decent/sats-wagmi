@@ -32,6 +32,8 @@ abstract class SatsConnector {
 
   abstract connect(): Promise<void>;
 
+  abstract signMessage(message: string): Promise<string>;
+
   abstract sendToAddress(toAddress: string, amount: number): Promise<string>;
 
   abstract signInput(inputIndex: number, psbt: Psbt): Promise<Psbt>;

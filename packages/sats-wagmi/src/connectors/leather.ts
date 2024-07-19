@@ -44,6 +44,22 @@ type RequestAddressesResult = {
 
 type RequestAddressesFn = (method: 'getAddresses') => Promise<Response<RequestAddressesResult>>;
 
+type SignMessageResult = {
+  signature: string;
+  address: string;
+  message: string;
+};
+
+type SignMessageFn = (
+  method: 'signMessage',
+  options: {
+    message: string;
+    paymentType?: 'p2wpkh' | 'p2tr'; // default is p2wpkh
+    network?: any;
+    account?: number;
+  }
+) => Promise<Response<SignMessageResult>>;
+
 type SendBTCFn = (
   method: 'sendTransfer',
   options: {
@@ -58,7 +74,7 @@ type SignPsbtFn = (method: 'signPsbt', options: SignPsbtRequestParams) => Promis
 declare global {
   interface Window {
     btc: {
-      request: RequestAddressesFn & SendBTCFn & SignPsbtFn;
+      request: SignMessageFn & RequestAddressesFn & SendBTCFn & SignPsbtFn;
     };
   }
 }
@@ -96,6 +112,15 @@ class LeatherConnector extends SatsConnector {
     this.ready = !!(window as any).LeatherProvider;
 
     return this.ready;
+  }
+
+  async signMessage(message: string) {
+    const resp = await window.btc.request('signMessage', {
+      message,
+      network: this.network
+    });
+
+    return resp.result.signature;
   }
 
   async sendToAddress(toAddress: string, amount: number): Promise<string> {

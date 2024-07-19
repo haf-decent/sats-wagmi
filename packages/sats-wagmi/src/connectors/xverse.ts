@@ -5,7 +5,8 @@ import {
   createInscription,
   getAddress,
   sendBtcTransaction,
-  signTransaction
+  signTransaction,
+  signMessage as signMessageXverse
 } from 'sats-connect';
 import { isValidBTCAddress } from '@gobob/utils';
 
@@ -81,6 +82,27 @@ class XverseConnector extends SatsConnector {
     this.ready = !!window.XverseProviders;
 
     return this.ready;
+  }
+
+  async signMessage(message: string): Promise<string> {
+    return new Promise(async (resolve, reject) => {
+      if (!this.address || !this.paymentAddress) {
+        return reject(new Error('Something went wrong while connecting'));
+      }
+      await signMessageXverse({
+        payload: {
+          network: getWalletNetwork(this.network),
+          address: this.address,
+          message
+        },
+        onFinish: (signature) => {
+          resolve(signature);
+        },
+        onCancel: () => {
+          reject(new Error('Sign Message canceled'));
+        }
+      });
+    });
   }
 
   async sendToAddress(toAddress: string, amount: number): Promise<string> {

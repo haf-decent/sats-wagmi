@@ -17,7 +17,7 @@ const getUnisatNetwork = (network: WalletNetwork): Network => {
   switch (network) {
     default:
     case 'mainnet':
-      return 'testnet';
+      return 'livenet';
     case 'testnet':
       return 'testnet';
   }
@@ -63,6 +63,7 @@ type Unisat = {
   getNetwork: () => Promise<Network>;
   getPublicKey: () => Promise<string>;
   getBalance: () => Promise<Balance>;
+  signMessage: (message: string) => Promise<string>;
   sendBitcoin: (address: string, atomicAmount: number, options?: { feeRate: number }) => Promise<string>;
   signPsbt: (
     psbtHex: string,
@@ -128,6 +129,10 @@ class UnisatConnector extends SatsConnector {
     this.ready = typeof window.unisat !== 'undefined';
 
     return this.ready;
+  }
+
+  async signMessage(message: string) {
+    return window.unisat.signMessage(message);
   }
 
   async sendToAddress(toAddress: string, amount: number): Promise<string> {

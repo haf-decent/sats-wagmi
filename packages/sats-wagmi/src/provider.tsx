@@ -2,7 +2,7 @@ import { BitcoinNetwork } from '@gobob/types';
 import { FC, ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@gobob/react-query';
 
-import { LeatherConnector, MMSnapConnector, UnisatConnector, XverseConnector } from './connectors';
+import { LeatherConnector, UnisatConnector, XverseConnector } from './connectors';
 import { SatsConnector } from './connectors/base';
 
 type SatsConfigData = {
@@ -52,12 +52,6 @@ const SatsWagmiConfig: FC<SatsWagmiConfigProps> = ({
       const unisat = new UnisatConnector(network);
 
       readyConnectors.push(unisat);
-
-      const mmSnap = new MMSnapConnector(network);
-
-      mmSnap.connect();
-
-      readyConnectors.push(mmSnap);
 
       const leather = new LeatherConnector(network);
 

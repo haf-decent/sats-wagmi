@@ -1,15 +1,20 @@
 {
-  "name": "@gobob/sats-wagmi",
-  "version": "0.0.3",
-  "description": "Bob sats-wagmi.",
-  "homepage": "https://github.com/bob-collective/sats-wagmi#readme",
+  "name": "btc-wagmi",
+  "version": "0.0.1",
+  "description": "Bitcoin wallet connect for front-end web applications",
+  "homepage": "https://github.com/haf-decent/sats-wagmi#readme",
   "license": "MIT",
   "keywords": [
-    "bob",
+    "btc",
     "btc wallet",
-    "btc wallet connector",
-    "btc wallet connector hooks",
-    "btc wallet connector config"
+    "btc wallet connect",
+    "btc wallet connect",
+    "btc wallet connect",
+    "bitcoin",
+    "bitcoin wallet",
+    "bitcoin wallet connect",
+    "bitcoin wallet connect",
+    "bitcoin wallet connect"
   ],
   "main": "src/index.ts",
   "files": [
@@ -21,11 +26,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bob-collective/sats-wagmi.git",
+    "url": "git+https://github.com/haf-decent/sats-wagmi.git",
     "directory": "packages/sats-wagmi"
   },
   "bugs": {
-    "url": "https://github.com/bob-collective/sats-wagmi/issues"
+    "url": "https://github.com/haf-decent/sats-wagmi/issues"
   },
   "scripts": {
     "lint": "eslint .",
